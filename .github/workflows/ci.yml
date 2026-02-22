@@ -1,0 +1,24 @@
+﻿name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Project
+        run: |
+          echo "Building the web application..."
+
+      - name: Notify Slack
+        uses: rtCamp/action-slack-notify@v2
+        with:
+          webhook_url: '${{ secrets.SLACK_WEBHOOK }}'
+          message: "✅ CI Pipeline completed for branch $${{ github.ref }} by $${{ github.actor }}"
+          status: custom
